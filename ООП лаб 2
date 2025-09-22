@@ -1,0 +1,88 @@
+#include <iostream>
+#include <cmath>
+#include <string>
+using namespace std;
+
+class Point {
+private:
+    double x, y; // закриті поля – координати точки
+
+public:
+    // Метод ініціалізації
+    void Init(double X, double Y) {
+        x = X;
+        y = Y;
+    }
+
+    // Метод введення з клавіатури
+    void Read() {
+        cout << "Введіть координати точки (x y): ";
+        cin >> x >> y;
+    }
+
+    // Метод виведення на екран
+    void Display() {
+        cout << "Точка: (" << x << ", " << y << ")" << endl;
+    }
+
+    // Перетворення в рядок
+    string toString() {
+        return "(" + to_string(x) + ", " + to_string(y) + ")";
+    }
+
+    // Переміщення точки по осі X
+    void moveX(double dx) {
+        x += dx;
+    }
+
+    // Переміщення точки по осі Y
+    void moveY(double dy) {
+        y += dy;
+    }
+
+    // Відстань до початку координат
+    double distanceToOrigin() {
+        return sqrt(x * x + y * y);
+    }
+
+    // Відстань між двома точками
+    double distanceTo(Point other) {
+        return sqrt(pow(x - other.x, 2) + pow(y - other.y, 2));
+    }
+
+    // Перетворення в полярні координати
+    void toPolar(double &r, double &phi) {
+        r = sqrt(x * x + y * y);
+        phi = atan2(y, x); // кут у радіанах
+    }
+
+    // Порівняння на збіг
+    bool isEqual(Point other) {
+        return (x == other.x && y == other.y);
+    }
+
+    // Порівняння на розбіжність
+    bool isNotEqual(Point other) {
+        return !isEqual(other);
+    }
+};
+
+int main() {
+    Point A, B;
+    A.Init(3, 4);
+    B.Init(6, 8);
+
+    cout << "Точка A: " << A.toString() << endl;
+    cout << "Точка B: " << B.toString() << endl;
+
+    cout << "Відстань A до початку координат: " << A.distanceToOrigin() << endl;
+    cout << "Відстань між A і B: " << A.distanceTo(B) << endl;
+
+    double r, phi;
+    A.toPolar(r, phi);
+    cout << "Полярні координати точки A: r=" << r << ", phi=" << phi << " рад" << endl;
+
+    cout << "Чи рівні точки A і B? " << (A.isEqual(B) ? "Так" : "Ні") << endl;
+
+    return 0;
+}
